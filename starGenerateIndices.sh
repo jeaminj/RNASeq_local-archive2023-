@@ -15,8 +15,3 @@ STAR \
 --runThreadN 4
 
 echo "Index generation complete!"
-
-"test edit"
-
-
-
