@@ -16,6 +16,7 @@ STAR \
 
 echo "Index generation complete!"
 
-test edit
+"test edit"
+
 
 
