@@ -63,8 +63,16 @@ echo "alignment complete!"
 # Step [4] Quantification with featureCounts
 # download annotation gtf file
 # wget https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz (variable to updates)
-featureCounts -s 2 -a index/Homo_sapiens.GRCh38.109.gtf -o quants/SRR15852396_tumor_featureCounts.txt mappedReads/SRR15852396_tumor.bam
-featureCounts -S 2 -a index/Homo_sapiens.GRCh38.109.gtf -o quants/SRR15852426_normal_featureCounts.txt mappedReads/SRR15852426_normal_.bam
+featureCounts \
+-0 -p -s -a index/Homo_sapiens.GRCh38.109.gtf \
+-o quants/bc_tissue_featureCounts.txt mappedReads/SRR15852396_tumor.bam mappedReads/SRR15852426_normal.bam
+
+# Step [5] Process counts file for DeSEQ2
+# Removes columns and rows that are not needed for the next step and renames column headers to SRR#
+(cat bc_tissue_featureCounts.txt | cut -f1,7,8 | sed '1d' \
+| sed -e "1s/mappedReads\/SRR15852396_tumor.bam/SRR15852396/g" \
+-e "1s/mappedReads\/SRR15852426_normal.bam/SRR15852426/g") > bc_tissuefeatureCounts_clean.txt
+
 
 duration=SECONDS
 echo "$((duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
