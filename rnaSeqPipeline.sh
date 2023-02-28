@@ -18,7 +18,7 @@ do
   fasterq-dump $srr -O ../rawData/
 done
 
-# Delete no longer needed files to free up disk space
+# Delete files created from prefetch to free up disk space
 rm -r SRR*
 
 # Step [1]: Quality Control with fastqc
@@ -31,10 +31,10 @@ do
     fq_fwd=${srr}_1.fastq
     fq_rev=${srr}_2.fastq
 
-    fastQC on forward reads
+    #fastQC on forward reads
     fastqc rawData/$fq_fwd -o rawData/
 
-    fastQC on reverse reads
+    #fastQC on reverse reads
     fastqc rawData/$fq_rev -o rawData/
 
     echo "FastQC done, reports stored in rawData/"
