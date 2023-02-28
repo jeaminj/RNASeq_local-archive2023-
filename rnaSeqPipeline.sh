@@ -65,28 +65,22 @@ echo "QC on trimmed data complete, begginning alignment!"
 # wget https://genome-idx.s3.amazon.aws.com/hisat/grch38_genome.tar.gz (variable to updates)
 
 # run alignment with hisat2
-for base in SRR15852396_tumor SRR15852426_normal
+
+for srr in ${srrArray[@]};
 do
-  echo $base
+  #Set value for paired and unpaired files
+  fq_1p=${srr}_trimmed_1P.fastq
+  fq_2p=${srr}_trimmed_2P.fastq
 
-  #defines R1 and R2 fastq filename
-  fq1=$fastq_reads/${base}_1P.fastq
-  echo "fq1 =" $fq1
-done
-
-  fq2=$fastq_reads/${base}_2P.fastq
-  echo "fq2 =" $fq2
-
+  echo begginning alignment of $srr to human genome
   hisat2 \
   -q --rna-strandness R \
   -x HISAT2/hisatGenomes/grch38/genome \
-  -1 $fq1 \
-  -2 $fq2 \
-  | samtools sort -o mappedReads/${base}.bam
+  -1 trimmedData/$fq_1p \
+  -2 trimmedData/$fq_2p \
+  | samtools sort -o mappedReads/${srr}.bam
 
 done
-
-echo "alignment complete!"
 
 # Step [4] Quantification with featureCounts
 # download annotation gtf file
