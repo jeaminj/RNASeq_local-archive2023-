@@ -15,4 +15,5 @@ STAR \
 --sjdbGTFfile index/Homo_sapiens.GRCh38.108.gtf \
 --runThreadN 4
 
-echo "Done!"
+duration=SECONDS
+echo "Done! $((duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
