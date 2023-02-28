@@ -65,7 +65,6 @@ echo "QC on trimmed data complete, begginning alignment!"
 # wget https://genome-idx.s3.amazon.aws.com/hisat/grch38_genome.tar.gz (variable to updates)
 
 # run alignment with hisat2
-
 for srr in ${srrArray[@]};
 do
   #Set value for paired and unpaired files
@@ -83,17 +82,19 @@ do
 done
 
 # Step [4] Quantification with featureCounts
-# download annotation gtf file
+# download gtf file (variable to updates)
 # wget https://ftp.ensembl.org/pub/release-108/gtf/homo_sapiens/Homo_sapiens.GRCh38.108.gtf.gz (variable to updates)
-featureCounts \
--0 -p -s -a index/Homo_sapiens.GRCh38.109.gtf \
--o quants/bc_tissue_featureCounts.txt mappedReads/SRR15852396_tumor.bam mappedReads/SRR15852426_normal.bam
 
-# Step [5] Process counts file for DeSEQ2 / edgeR
+# we will input both our bams in one command and get one output file
+featureCounts \
+-p -s 2 -a index/Homo_sapiens.GRCh38.109.gtf \
+-o quants/bc_tissue_featureCounts3.txt mappedReads/SRR15852396.bam mappedReads/SRR15852426.bam
+
+# Step [5] Process counts file for DeSEQ2
 # Removes columns and rows that are not needed for the next step and renames column headers to SRR#
-(cat bc_tissue_featureCounts.txt | cut -f1,7,8 | sed '1d' \
-| sed -e "1s/mappedReads\/SRR15852396_tumor.bam/SRR15852396/g" \
--e "1s/mappedReads\/SRR15852426_normal.bam/SRR15852426/g") > bc_tissue_counts.txt
+(cat quants/bc_tissue_featureCounts.txt | cut -f1,7,8 | sed '1d' \
+| sed -e "1s/mappedReads\/SRR15852396.bam/SRR15852396/g" \
+-e "1s/mappedReads\/SRR15852426.bam/SRR15852426/g") > quants/bc_tissue_counts.txt
 
 
 duration=SECONDS
