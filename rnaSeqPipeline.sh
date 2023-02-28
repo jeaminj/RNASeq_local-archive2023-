@@ -3,7 +3,7 @@
 #Configured for paired end reads
 
 #Declare array containing srr accession numbers
-srrArray=("SRR15852426")
+srrArray=("SRR15852326" "SRR15852426")
 
 # Step [0]: Retrieve SRA Data
 # Use sra-tools 2.10, updated version does not work
@@ -19,7 +19,7 @@ do
 done
 
 # Delete no longer needed files to free up disk space
-#rm -r SRR*
+rm -r SRR*
 
 # Step [1]: Quality Control with fastqc
 #Change working directory
@@ -31,13 +31,13 @@ do
     fq_fwd=${srr}_1.fastq
     fq_rev=${srr}_2.fastq
 
-    #FastQC on forward reads
-    #fastqc rawData/$fq_fwd -o rawData/
+    fastQC on forward reads
+    fastqc rawData/$fq_fwd -o rawData/
 
-    #FastQC on reverse reads
-    #fastqc rawData/$fq_rev -o rawData/
+    fastQC on reverse reads
+    fastqc rawData/$fq_rev -o rawData/
 
-    #echo "FastQC done, reports stored in rawData/"
+    echo "FastQC done, reports stored in rawData/"
 
 # Step [2]: Trimming with trimmomatic
 #change adapter file accordingly
@@ -52,8 +52,8 @@ do
 
     echo "Trimming completed for" $srr ", outputs stored in /trimmedData"
     #Have to delete the raw fastq after trimming to free disk space
-    #rm rawData/$fq_fwd
-    #rm rawData/$fq_rev
+    rm rawData/$fq_fwd
+    rm rawData/$fq_rev
 done
 
 # Step [2.5]: quality checking the now trimmed data
