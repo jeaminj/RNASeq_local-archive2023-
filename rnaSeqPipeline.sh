@@ -1,33 +1,60 @@
 #!/bin/bash
+#Assumes all necessary packages are installed already in env
+#Configured for paired end reads
 
-SECONDS=0
+#Declare array containing srr accession numbers
+srrArray=("SRR15852426")
 
-#set working directory
-cd /Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/
+# Step [0]: Retrieve SRA Data
+# Use sra-tools 2.10, updated version does not work
+#Set working directory
+cd /Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/sra/
+
+for srr in ${srrArray[@]};
+do 
+  echo "starting data retrieval of" $srr
+  prefetch $srr
+  echo "begginning fasterq-dump, fastq files will be stored in rawData/"
+  fasterq-dump $srr -O ../rawData/
+done
+
+# Delete no longer needed files to free up disk space
+#rm -r SRR*
 
 # Step [1]: Quality Control with fastqc
-fastqc rawData/*.fastq -o rawData/
+#Change working directory
+cd /Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/
+
+for srr in ${srrArray[@]};
+do
+    #Set value for forward and reverse-read fastq files 
+    fq_fwd=${srr}_1.fastq
+    fq_rev=${srr}_2.fastq
+
+    #FastQC on forward reads
+    #fastqc rawData/$fq_fwd -o rawData/
+
+    #FastQC on reverse reads
+    #fastqc rawData/$fq_rev -o rawData/
+
+    #echo "FastQC done, reports stored in rawData/"
 
 # Step [2]: Trimming with trimmomatic
-trimmomatic PE \
--threads 4 \
--phred33 \
--trimlog trimmedData/SRR15852396_tumor_trimmed.log \
-rawData/SRR15852396_1.fastq rawData/SRR15852396_2.fastq \
--baseout trimmedData/SRR15852396_tumor.fastq \
-ILLUMINACLIP:adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 MINLEN:36  
+#change adapter file accordingly
 
-echo "Trimmomatic completed on tumor sequences, starting trimming on normal!"
+    trimmomatic PE \
+    -threads 4 \
+    -phred33 \
+    -trimlog trimmedData/${srr}_trimmed.log \
+    rawData/$fq_fwd rawData/$fq_rev \
+    -baseout trimmedData/${srr}_trimmed.fastq \
+    ILLUMINACLIP:adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 MINLEN:36  
 
-trimmomatic PE \
--threads 4 \
--phred33 \
--trimlog trimmedData/SRR15852426_normal_trimmed.log \
-rawData/SRR15852426_1.fastq rawData/SRR15852426_2.fastq \
--baseout trimmedData/SRR15852426_normal.fastq \
-ILLUMINACLIP:adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 MINLEN:36 
-
-echo "Trimmomatic completed on normal sequences, starting qc on trimmed data"
+    echo "Trimming completed for" $srr ", outputs stored in /trimmedData"
+    #Have to delete the raw fastq after trimming to free disk space
+    #rm rawData/$fq_fwd
+    #rm rawData/$fq_rev
+done
 
 # Step [2.5]: quality checking the now trimmed data
 fastqc trimmedData/*.fastq -o trimmedData/
@@ -45,6 +72,7 @@ do
   #defines R1 and R2 fastq filename
   fq1=$fastq_reads/${base}_1P.fastq
   echo "fq1 =" $fq1
+done
 
   fq2=$fastq_reads/${base}_2P.fastq
   echo "fq2 =" $fq2
@@ -67,11 +95,11 @@ featureCounts \
 -0 -p -s -a index/Homo_sapiens.GRCh38.109.gtf \
 -o quants/bc_tissue_featureCounts.txt mappedReads/SRR15852396_tumor.bam mappedReads/SRR15852426_normal.bam
 
-# Step [5] Process counts file for DeSEQ2
+# Step [5] Process counts file for DeSEQ2 / edgeR
 # Removes columns and rows that are not needed for the next step and renames column headers to SRR#
 (cat bc_tissue_featureCounts.txt | cut -f1,7,8 | sed '1d' \
 | sed -e "1s/mappedReads\/SRR15852396_tumor.bam/SRR15852396/g" \
--e "1s/mappedReads\/SRR15852426_normal.bam/SRR15852426/g") > bc_tissuefeatureCounts_clean.txt
+-e "1s/mappedReads\/SRR15852426_normal.bam/SRR15852426/g") > bc_tissue_counts.txt
 
 
 duration=SECONDS
