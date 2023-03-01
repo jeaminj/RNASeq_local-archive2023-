@@ -1,6 +1,7 @@
 #!/bin/bash
 #Assumes all necessary packages are installed already in env
 #Configured for paired end reads
+SECONDS=0
 
 #Declare array containing srr accession numbers
 srrArray=("SRR15852326" "SRR15852426")
@@ -56,7 +57,7 @@ do
     rm rawData/$fq_rev
 done
 
-# Step [2.5]: quality checking the now trimmed data
+#Step [2.5]: quality checking the now trimmed data (ignoring unpaired reads)
 fastqc trimmedData/*.fastq -o trimmedData/
 echo "QC on trimmed data complete, begginning alignment!"
 
@@ -67,7 +68,7 @@ echo "QC on trimmed data complete, begginning alignment!"
 # run alignment with hisat2
 for srr in ${srrArray[@]};
 do
-  #Set value for paired and unpaired files
+  #Set value for forward paired and reverse paired files
   fq_1p=${srr}_trimmed_1P.fastq
   fq_2p=${srr}_trimmed_2P.fastq
 
