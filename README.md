@@ -1,7 +1,10 @@
 # RNASeq_local
-scripts for running rnaseq workflow locally  without the need for high performance computing
+scripts for running rnaseq workflow locally without the need for high performance computing
 
-Note STAR cannot locally be used for alignment without significant more storage and memory than below
+
+
+Note: STAR cannot locally be used for alignment without significant more storage and memory than below
+
 
 
 System specifications:
