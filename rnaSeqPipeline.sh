@@ -1,10 +1,17 @@
 #!/bin/bash
-#Assumes all necessary packages are already installed in env
-#Configured for paired end reads
+# This script is a locally optimized demonstration of RNASeq workflow, and thus does not contain the syntax or parameters 
+# to be executed on an HPC cluster
+#
+# This script assumes all necessary packages are correctly installed in an (Anaconda) environment and will be run in such
+# 
+# This script takes paired-end sequence data in FastQ format and then generates a corresponding mapped.bam file -
+# and a processed count matrix file ready for differential gene expression analysis
+# 
+# 
 # ----------------------------------------------------------------------------------------------------
 # timer
 SECONDS=0
-# array containing srr accession numbers
+# Array containing srr accession numbers (
 srrArray=("SRR15852396" "SRR15852426")
 # working directories
 sraDir=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/sra/
@@ -12,7 +19,7 @@ wd=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/
 # adapter for trimming
 adapter=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/adapters/TruSeq3-PE-2.fa
 
-# Step [0]: Retrieve SRA Data
+# Step [0]: Retrieve SRA Data (To be commented out if data already in possession)
 # ----------------------------------------------------------------------------------------------------
 # Use sra-tools 2.10, updated version does not work
 # Set working directory to sraDir
