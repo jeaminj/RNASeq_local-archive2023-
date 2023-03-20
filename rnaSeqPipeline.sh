@@ -81,7 +81,7 @@ echo "QC on paired trimmed data complete, begginning alignment!"
 # Step [3]: Aligning with HISAT2
 # ----------------------------------------------------------------------------------------------------
 # obtain genome index from:
-# wget https://genome-idx.s3.amazon.aws.com/hisat/grch38_genome.tar.gz
+# wget https://genome-idx.s3.amazonaws.com/hisat/grch38_genome.tar.gz
 
 for srr in ${srrArray[@]};
 do
