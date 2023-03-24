@@ -33,7 +33,7 @@ do
   fasterq-dump $srr -O ../rawData/
 done
 
-# Delete files created from prefetch to free up disk space
+# (Optional) Delete files created from prefetch to free up disk space 
 rm -r SRR*
 
 # Step [1]: Quality Control with fastqc
@@ -68,9 +68,6 @@ do
     ILLUMINACLIP:$adapter:2:30:10 LEADING:3 TRAILING:3 MINLEN:36  
 
     echo "Trimming completed for" $srr ", outputs stored in /trimmedData"
-    #Have to delete the raw fastq after trimming to free disk space
-    rm rawData/$fq_fwd
-    rm rawData/$fq_rev
 done
 
 # Step [2.5]: quality checking the now trimmed data (ignoring unpaired reads)
