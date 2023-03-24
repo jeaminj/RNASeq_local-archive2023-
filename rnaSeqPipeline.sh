@@ -1,23 +1,25 @@
 #!/bin/bash
-# This script is a locally optimized demonstration of RNASeq workflow, and thus does not contain the syntax or parameters 
-# to be executed on an HPC cluster
+# This script is a locally optimized demonstration of an RNASeq workflow, and thus does not contain the syntax or parameters 
+# to be executed on cloud or an HPC cluster
 #
-# This script assumes all necessary packages are correctly installed in an (Anaconda) environment and will be run in such
-# 
 # This script takes paired-end sequence data in FastQ format and then generates a corresponding mapped.bam file -
 # and a processed count matrix file ready for differential gene expression analysis
 # 
+# This script assumes all necessary packages are correctly installed in an Anaconda environment and will be run in such
+#
+# A docker image containing all required packages to run this script can be pulled from jeaminj/data_process_tools 
 # 
 # ----------------------------------------------------------------------------------------------------
 # timer
 SECONDS=0
-# Array containing srr accession numbers (
-srrArray=("SRR15852396" "SRR15852426")
-# working directories
-sraDir=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/sra/
-wd=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/
-# adapter for trimming
-adapter=/Users/jeamin/Documents/bioinfo/bc_tissue_rnaSeq/adapters/TruSeq3-PE-2.fa
+
+# Array containing srr accession numbers 
+srrArray=("SRR15852426" "SRR15852396")
+
+# directories
+sraDir=/home/sra/
+wd=/home
+adapter_dir=/opt/conda/envs/bioenv/share/trimmomatic/adapters
 
 # Step [0]: Retrieve SRA Data (To be commented out if data already in possession)
 # ----------------------------------------------------------------------------------------------------
@@ -63,9 +65,9 @@ do
     -threads 4 \
     -phred33 \
     -trimlog trimmedData/${srr}_trimmed.log \
-    rawData/$fq_fwd rawData/$fq_rev \
+    rawData/${fq_fwd} rawData/${fq_rev} \
     -baseout trimmedData/${srr}_trimmed.fastq \
-    ILLUMINACLIP:$adapter:2:30:10 LEADING:3 TRAILING:3 MINLEN:36  
+    ILLUMINACLIP:$adapter_dir/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 MINLEN:36    
 
     echo "Trimming completed for" $srr ", outputs stored in /trimmedData"
 done
