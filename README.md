@@ -7,10 +7,14 @@ These scripts serve as a demonstration for a workflow that could be performed on
 
 The entire workflow can be executed by running rnaSeqPipeline.sh, or seperately in the following order:
 
-[1] getfastq_and_qc.sh
+[1] getfastq_and_qc.sh 
+&nbsp; 
 [2] callFastp.sh
+&nbsp; 
 [3] alignToGenome.sh
+&nbsp; 
 [4] getGeneCounts.sh
+&nbsp; 
 
 A detailed description on what each step does can be found in the script
 
