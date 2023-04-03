@@ -1,7 +1,7 @@
 # RNASeq_local
 Scripts for running rnaseq workflow locally without cloud or high performance computing
 
-These scripts serve as a demonstration for a workflow that could be performed on the cloud or HPC environment with some modifications (resource requests, job steps). The data and analysis produced from this workflow may be useful in pilot studies, where analysis is needed on an experiment before more resources are devoted towards continuing the investigation
+These scripts serve as a workflow demonstration of pre-processing rnaseq data that can also be executed on the cloud or HPC environment with some modifications (resource requests, job steps). Although the data and analysis produced from this workflow lack high replicate counts, it may be useful in pilot studies, where analysis is needed on an experiment before more resources are devoted towards continuing the investigation. 
 
 &nbsp; 
 
