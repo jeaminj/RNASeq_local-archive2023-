@@ -12,7 +12,7 @@
 SECONDS=0
 
 # Array containing srr accession numbers 
-srrArray=("SRR15852396" "SRR15852426" "SRR15852429" "SRR15852399" "SRR15852443" "SRR15852413")
+srrArray=("SRR15195418" "SRR15195419" "SRR15195427" "SRR15195428" "SRR15195438" "SRR15195439")
 
 # working directory
 wd=/home
@@ -31,11 +31,11 @@ do
 
   echo begginning alignment of $srr to human genome
   hisat2 \
-  -q --rna-strandness RF \
+  -q \
   -x HISAT2/grch38/genome \
   -1 trimmedData/$fq_1p \
   -2 trimmedData/$fq_2p \
-  | samtools sort -o mappedReads2/${srr}.bam
+  | samtools sort -o mappedReads/${srr}.bam
 
 done
 

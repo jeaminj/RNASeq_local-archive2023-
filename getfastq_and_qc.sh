@@ -12,7 +12,7 @@
 SECONDS=0
 
 # Array containing srr accession numbers 
-srrArray=("SRR15852396" "SRR15852426" "SRR15852429" "SRR15852399" "SRR15852443" "SRR15852413")
+srrArray=("SRR15195418" "SRR15195419" "SRR15195427" "SRR15195428" "SRR15195438" "SRR15195439")
 
 # directories
 sraDir=/home/sra/

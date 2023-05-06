@@ -14,7 +14,7 @@
 SECONDS=0
 
 # Array containing srr accession numbers 
-srrArray=("SRR15852396" "SRR15852426" "SRR15852429" "SRR15852399" "SRR15852443" "SRR15852413")
+srrArray=("SRR15195418" "SRR15195419" "SRR15195427" "SRR15195428" "SRR15195438" "SRR15195439")
 
 # directories
 sraDir=/home/sra/
@@ -65,7 +65,7 @@ echo "Starting fastp for" ${srr}
     -I rawData/$fq_rev \
     --out1 trimmedData/${srr}_trimmed_1P.fastq \
     --out2 trimmedData/${srr}_trimmed_2P.fastq \
-    --length_required 125
+    --length_required 139
 
     echo "Trimming completed for" $srr ", outputs stored in "trimmedData" directory"
 done
@@ -88,7 +88,7 @@ do
 
   echo begginning alignment of $srr to human genome
   hisat2 \
-  -q --rna-strandness RF \
+  -q \
   -x HISAT2/hisatGenomes/grch38/genome \
   -1 trimmedData/$fq_1p \
   -2 trimmedData/$fq_2p \
@@ -103,7 +103,7 @@ done
 
 # we will input all our bams in one command and get one output file
 featureCounts \
--p --countReadPairs -s 2 -a index/Homo_sapiens.GRCh38.109.gtf \
+-p --countReadPairs -s 0 -a index/Homo_sapiens.GRCh38.109.gtf \
 -o quants/bc_tissue_featureCounts.txt mappedReads/*.bam
 
 # Step [5] Process counts file for DeSEQ2/edgeR 

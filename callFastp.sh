@@ -12,7 +12,7 @@
 SECONDS=0
 
 # Array containing srr accession numbers 
-srrArray=("SRR15852396" "SRR15852426" "SRR15852429" "SRR15852399" "SRR15852443" "SRR15852413")
+srrArray=("SRR15195418" "SRR15195419" "SRR15195427" "SRR15195428" "SRR15195438" "SRR15195439")
 
 # directories
 wd=/home
@@ -35,7 +35,7 @@ echo "Starting fastp for" ${srr}
     -I rawData/$fq_rev \
     --out1 trimmedData/${srr}_trimmed_1P.fastq \
     --out2 trimmedData/${srr}_trimmed_2P.fastq \
-    --length_required 125
+    --length_required 139
 
     echo "Trimming completed for" $srr ", outputs stored in "trimmedData" directory"
 done

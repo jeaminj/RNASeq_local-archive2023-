@@ -23,19 +23,19 @@ cd $wd
 
 # we will input both our bams in one command and get one output file
 featureCounts \
--p --countReadPairs -s 2 -a index/Homo_sapiens.GRCh38.109.gtf \
--o quants/bc_tissue_featureCounts3.txt mappedReads2/*.bam
+-p -s 0 -a index/Homo_sapiens.GRCh38.109.gtf \
+-o quants/bc_tissue_featureCounts.txt mappedReads/*.bam
 
 # Step [5] Process counts file for DeSEQ2/edgeR 
 # ----------------------------------------------------------------------------------------------------
 # Keeps only the GeneID and SRR# columns and rows and renames column headers to SRR#
-(cat quants/bc_tissue_featureCounts3.txt | cut -f1,7,8,9,10,11,12 | sed '1d' \
-| sed -e "1s/mappedReads2\/SRR15852426.bam/SRR15852426/g" \
--e "1s/mappedReads2\/SRR15852396.bam/SRR15852396/g" \
--e "1s/mappedReads2\/SRR15852429.bam/SRR15852429/g" \
--e "1s/mappedReads2\/SRR15852399.bam/SRR15852399/g" \
--e "1s/mappedReads2\/SRR15852443.bam/SRR15852443/g" \
--e "1s/mappedReads2\/SRR15852413.bam/SRR15852413/g") > quants/bc_tissue_counts3.txt
+(cat quants/bc_tissue_featureCounts.txt | cut -f1,7,8,9,10,11,12 | sed '1d' \
+| sed -e "1s/mappedReads\/SRR15852426.bam/SRR15852426/g" \
+-e "1s/mappedReads\/SRR15852396.bam/SRR15852396/g" \
+-e "1s/mappedReads\/SRR15852429.bam/SRR15852429/g" \
+-e "1s/mappedReads\/SRR15852399.bam/SRR15852399/g" \
+-e "1s/mappedReads\/SRR15852443.bam/SRR15852443/g" \
+-e "1s/mappedReads\/SRR15852413.bam/SRR15852413/g") > quants/bc_tissue_counts.txt
 # -----------------------------------------------------------------------------------------------------
 
 duration=SECONDS
