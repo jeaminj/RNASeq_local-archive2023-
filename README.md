@@ -13,5 +13,5 @@ The entire workflow can be executed by running rnaSeqPipeline.sh, or seperately 
 [4] getGeneCounts.sh
 &nbsp; 
 
-A detailed description on what each step does can be found in the script
+A detailed description on what each step does can be found in the script, supplemental guide can be found on https://jeaminsblog.com/
 
