@@ -1,7 +1,7 @@
 # RNASeq_local
 Scripts for running a data pre-processing rnaseq workflow locally, without cloud or high performance computing
 
-These scripts serve as a workflow demonstration of pre-processing rnaseq data without the need of cloud or HPC cluster (Given appropriate system specifications). Although the data and analysis produced from this workflow lack high replicate counts, it may be useful in pilot studies, where analysis is needed on an experiment before more resources are devoted towards continuing the investigation. 
+These scripts serve as a workflow demonstration of pre-processing rnaseq data without the need of cloud or HPC cluster (Given appropriate system specifications). 
 
 &nbsp; 
 
@@ -13,5 +13,5 @@ The entire workflow can be executed by running rnaSeqPipeline.sh, or seperately 
 [4] getGeneCounts.sh
 &nbsp; 
 
-A detailed description on what each step does can be found in the script. Supplemental guide can be found on https://jeaminsblog.com/
+Detailed descriptions of each step can be found in the script. Supplemental guide and workstation set up can be found on https://jeaminsblog.com/
 
