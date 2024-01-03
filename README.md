@@ -1,4 +1,4 @@
-# RNASeq_local
+# RNASeq_local (archive 2023)
 Scripts for running a data pre-processing rnaseq workflow locally, without cloud or high performance computing
 
 These scripts serve as a workflow demonstration of pre-processing rnaseq data without the need of cloud or HPC cluster (Given appropriate system specifications). 
